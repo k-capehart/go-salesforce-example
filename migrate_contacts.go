@@ -59,6 +59,7 @@ func main() {
 	err = sf.UpdateCollection("Contact", contacts, 200)
 	if err != nil {
 		logger.Fatal(err.Error())
+	} else {
+		logger.Print("successfully updated " + strconv.Itoa(len(contacts)) + " contacts")
 	}
-	logger.Print("successfully updated " + strconv.Itoa(len(contacts)) + " contacts")
 }
