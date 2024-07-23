@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/k-capehart/go-salesforce"
+	"github.com/k-capehart/go-salesforce/v2"
 )
 
 type Contact struct {
@@ -56,9 +56,11 @@ func main() {
 		contacts[i].AccountId = targetAccount
 	}
 	logger := log.New(os.Stdout, "INFO: ", log.Ldate|log.Ltime)
-	err = sf.UpdateCollection("Contact", contacts, 200)
+	results, err := sf.UpdateCollection("Contact", contacts, 200)
 	if err != nil {
 		logger.Fatal(err.Error())
+	} else if results.HasSalesforceErrors {
+		logger.Fatal(results.Results)
 	} else {
 		logger.Print("successfully updated " + strconv.Itoa(len(contacts)) + " contacts")
 	}
